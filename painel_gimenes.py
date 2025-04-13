@@ -63,7 +63,7 @@ except ImportError:
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_excel(".streamlit/0012.xlsx", sheet_name="Planilha")
+        df = pd.read_excel("0012.xlsx", sheet_name="Planilha")
 
         # Verificar colunas disponíveis
         # st.sidebar.write("Colunas disponíveis:", df.columns.tolist())
