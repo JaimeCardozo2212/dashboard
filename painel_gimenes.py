@@ -63,7 +63,7 @@ except ImportError:
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_excel("0012.xlsx", sheet_name="Planilha")
+        df = pd.read_excel(".streamlit/0012.xlsx", sheet_name="Planilha")
 
         # Verificar colunas disponíveis
         # st.sidebar.write("Colunas disponíveis:", df.columns.tolist())
@@ -193,12 +193,12 @@ if not filtered_df.empty and 'Valor Total' in filtered_df.columns and 'Quantidad
         st.metric(label="Valor Total (R$)", value=f"{total_valor:,.2f}")
 
     with col2:
-        st.metric(label="Quantidade Total", value=f"{total_quantidade:,}")
+        st.metric(label="Procedimentos Realizados", value=f"{total_quantidade:,}")
 
 # Gráfico de Barras Interativo
 if 'NomeProcedimento' in available_columns:
     st.subheader("Top Procedimentos")
-    top_n = st.slider("Selecione quantos procedimentos mostrar:", 5, 20, 10)
+    top_n = st.slider("Selecione quantos procedimentos mostrar:", 5, 100, 20)
 
     proc_counts = filtered_df['NomeProcedimento'].value_counts().nlargest(top_n).reset_index()
     proc_counts.columns = ['Procedimento', 'Quantidade']
@@ -289,7 +289,7 @@ if 'Data Requisição' in available_columns:
         time_data,
         x='Periodo',
         y='Contagem',
-        title=f'Procedimentos por {time_group}',
+        title=f'Requisição por {time_group}',
         markers=True
     )
 
@@ -311,7 +311,7 @@ if 'Data Requisição' in available_columns:
 if 'Valor Total' in available_columns and 'NomeProcedimento' in available_columns:
     st.subheader("Distribuição de Valores por Procedimento")
 
-    top_procs = st.slider("Selecione quantos procedimentos analisar:", 5, 20, 10, key="boxplot_slider")
+    top_procs = st.slider("Selecione quantos procedimentos analisar:", 5, 50, 20, key="boxplot_slider")
     procs_list = filtered_df['NomeProcedimento'].value_counts().nlargest(top_procs).index.tolist()
 
     fig = px.box(
@@ -336,3 +336,4 @@ if 'Valor Total' in available_columns and 'NomeProcedimento' in available_column
 # Rodapé
 st.markdown("---")
 st.markdown("Dashboard desenvolvido com Streamlit e Plotly")
+st.markdown("Dashboard desenvolvido Por Jaime Jose Cardozo Junior")
